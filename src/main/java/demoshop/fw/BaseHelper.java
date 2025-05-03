@@ -2,12 +2,9 @@ package demoshop.fw;
 
 import com.google.common.io.Files;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
+
 
 public class BaseHelper {
     WebDriver driver;
@@ -17,6 +14,9 @@ public class BaseHelper {
     }
 
     public void type(By locator, String text) {
+        if (text == null) {
+            return;
+        }
         click(locator);
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(text);
@@ -26,12 +26,17 @@ public class BaseHelper {
         driver.findElement(locator).click();
     }
 
-    public boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() > 0;
+    public boolean isErrorDisplayed() {
+        boolean error = driver.findElement(By.xpath("//li[.='The specified email already exists']")).isDisplayed();
+        if (error) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public WebElement waitElementPresent(By locator, int seconds) {
-        return new WebDriverWait(driver, Duration.ofSeconds(seconds)).until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
     }
 
     public String takeScreenshot() {

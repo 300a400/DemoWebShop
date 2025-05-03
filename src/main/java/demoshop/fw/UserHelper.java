@@ -47,6 +47,10 @@ public class UserHelper extends BaseHelper {
         click(By.cssSelector("input.login-button"));
     }
 
+    public boolean isEmailExists() {
+        return isErrorDisplayed();
+    }
+
     public void clickOnLoginLink() {
         click(By.cssSelector("[href='/login']"));
     }
@@ -62,5 +66,4 @@ public class UserHelper extends BaseHelper {
     public void clickOnSignOutButton() {
         click(By.cssSelector("[href='/logout']"));
     }
-
 }

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.events.WebDriverListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
+
 import java.time.Duration;
 
 public class ApplicationManager {
@@ -25,9 +26,11 @@ public class ApplicationManager {
     public void init() {
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
+            user = new UserHelper(driver);
             logger.info("Test started in Chrome browser");
-        } else if(browser.equalsIgnoreCase("firefox")) {
+        } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
+            user = new UserHelper(driver);
             logger.info("Test started in Firefox browser");
         }
 
