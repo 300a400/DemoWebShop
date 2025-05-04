@@ -9,26 +9,28 @@ import org.testng.annotations.Test;
 public class LoginTest extends TestBase {
 
     @BeforeMethod
-    public void precondition() {
-        if (app.getUser().isLinkLogOutPresent()) {
+    public void ensureLoggedOut() {
+        if (!app.getUser().isLoginLinkPresent()) {
             app.getUser().clickOnSignOutButton();
         }
     }
 
     @Test
     public void loginPositiveTest() {
-        app.getUser().login(new User()
-                .setEmail(UserData.EMAIL_LOGIN)
+        app.getUser().clickOnLoginLink();
+        app.getUser().fillLoginForm(new User()
+                .setEmail(UserData.EMAIL)
                 .setPassword(UserData.PASSWORD));
+        app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isLinkLogOutPresent());
     }
 
     @Test
     public void loginNegativeWithoutEmailTest() {
         app.getUser().clickOnLoginLink();
-        app.getUser().fillLoginForm(new User().setPassword(UserData.PASSWORD));
+        app.getUser().fillLoginForm(new User()
+                .setPassword(UserData.PASSWORD));
         app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isTextValidationErrorsPresent());
     }
 }
-

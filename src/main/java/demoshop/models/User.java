@@ -6,12 +6,6 @@ public class User {
     private String email;
     private String password;
     private String confirmPassword;
-    private String gender;
-
-    public User setGender(String gender) {
-        this.gender = gender;
-        return this;
-    }
 
     public String getFirstName() {
         return firstName;

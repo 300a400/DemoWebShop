@@ -24,7 +24,6 @@ public class CreateAccountTests extends TestBase {
                 .setEmail(UserData.EMAIL_REG)
                 .setPassword(UserData.PASSWORD)
                 .setConfirmPassword(UserData.CONFIRMPASSWORD);
-
         app.getUser().register(user);
         Assert.assertTrue(app.getUser().isLinkLogOutPresent());
     }

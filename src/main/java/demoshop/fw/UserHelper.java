@@ -14,33 +14,16 @@ public class UserHelper extends BaseHelper {
         click(By.linkText("Register"));
     }
 
-    public void clickOnLoginLink() {
-        click(By.linkText("Log in"));
-    }
-
-    public void clickOnSignOutButton() {
-        click(By.linkText("Log out"));
-    }
-
     public void fillRegistrationForm(User user) {
         type(By.id("FirstName"), user.getFirstName());
-        type(By.id("LastName"), user.getLastName());
-        type(By.id("Email"), user.getEmail());
-        type(By.id("Password"), user.getPassword());
+        type(By.id("LastName"),  user.getLastName());
+        type(By.id("Email"),     user.getEmail());
+        type(By.id("Password"),  user.getPassword());
         type(By.id("ConfirmPassword"), user.getConfirmPassword());
-    }
-
-    public void fillLoginForm(User user) {
-        type(By.id("Email"), user.getEmail());
-        type(By.id("Password"), user.getPassword());
     }
 
     public void clickOnRegistrationButton() {
         click(By.id("register-button"));
-    }
-
-    public void clickOnLoginButton() {
-        click(By.cssSelector("input.button-1.login-button"));
     }
 
     public void register(User user) {
@@ -49,21 +32,32 @@ public class UserHelper extends BaseHelper {
         clickOnRegistrationButton();
     }
 
-    public void login(User user) {
-        clickOnLoginLink();
-        fillLoginForm(user);
-        clickOnLoginButton();
+    public void clickOnLoginLink() {
+        click(By.linkText("Log in"));
+    }
+
+    public void fillLoginForm(User user) {
+        type(By.id("Email"),    user.getEmail());
+        type(By.id("Password"), user.getPassword());
+    }
+
+    public void clickOnLoginButton() {
+        click(By.cssSelector("input.button-1.login-button"));
+    }
+
+    public boolean isLoginLinkPresent() {
+        return isElementPresent(By.linkText("Log in"));
+    }
+
+    public boolean isTextValidationErrorsPresent() {
+        return driver.findElement(By.cssSelector("div.validation-summary-errors")).isDisplayed();
     }
 
     public boolean isLinkLogOutPresent() {
         return isElementPresent(By.linkText("Log out"));
     }
 
-    public boolean isTextValidationErrorsPresent() {
-        return isElementPresent(By.cssSelector(".field-validation-error"));
-    }
-
-    public boolean isEmailAlreadyExistErrorDisplayed() {
-        return isElementPresent(By.xpath("//li[contains(.,'The specified email already exists')]"));
+    public void clickOnSignOutButton() {
+        click(By.linkText("Log out"));
     }
 }

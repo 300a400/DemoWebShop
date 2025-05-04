@@ -6,37 +6,36 @@ import java.io.File;
 import java.io.IOException;
 
 public class BaseHelper {
-    protected WebDriver driver;
+    WebDriver driver;
 
     public BaseHelper(WebDriver driver) {
         this.driver = driver;
     }
 
-    protected void click(By locator) {
+    public void type(By locator, String text) {
+        if (text == null) return;
+        click(locator);
+        WebElement e = driver.findElement(locator);
+        e.clear();
+        e.sendKeys(text);
+    }
+
+    public void click(By locator) {
         driver.findElement(locator).click();
     }
 
-    protected void type(By locator, String text) {
-        if (text == null || text.isEmpty()) {
-            return;
-        }
-        WebElement el = driver.findElement(locator);
-        el.clear();
-        el.sendKeys(text);
-    }
-
-    protected boolean isElementPresent(By locator) {
+    public boolean isElementPresent(By locator) {
         return driver.findElements(locator).size() > 0;
     }
 
-    public String takeScreenshot() {
-        File tmp = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        File png = new File("screenshots/screen-" + System.currentTimeMillis() + ".png");
+    public String takeScreenshot(){
+        File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screenshot = new File("screenshots/screen-" + System.currentTimeMillis() + ".png");
         try {
-            Files.copy(tmp, png);
+            Files.copy(tmp,screenshot);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return png.getAbsolutePath();
+        return screenshot.getAbsolutePath();
     }
 }
