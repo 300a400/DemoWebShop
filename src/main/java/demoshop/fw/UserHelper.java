@@ -10,60 +10,60 @@ public class UserHelper extends BaseHelper {
         super(driver);
     }
 
-    public boolean isTextRegistrationCompletedPresent() {
-        return isElementPresent(By.xpath("//div[contains(text(),'Your registration completed')]"));
-    }
-
-    public boolean isLinkLogOutPresent() {
-        return isElementPresent(By.xpath("//a[@class='ico-logout']"));
-    }
-
-    public void fillRegistrationForm(User user) {
-        type(By.name("FirstName"), user.getFirstName());
-        type(By.name("LastName"), user.getLastName());
-        type(By.name("Email"), user.getEmail());
-        type(By.name("Password"), user.getPassword());
-        type(By.name("ConfirmPassword"), user.getConfirmPassword());
-    }
-
     public void clickOnRegistrationLink() {
-        click(By.cssSelector("[href='/register']"));
-    }
-
-    public boolean isTextEmailExistsPresent() {
-        return isElementPresent(By.xpath("//li[text() = 'The specified email already exists']"));
-    }
-
-    public void clickOnRegistrationButton() {
-        click(By.name("register-button"));
-    }
-
-    public void fillLoginForm(User user) {
-        type(By.name("Email"), user.getEmail());
-        type(By.name("Password"), user.getPassword());
-    }
-
-    public void clickOnLoginButton() {
-        click(By.cssSelector("input.login-button"));
-    }
-
-    public boolean isEmailExists() {
-        return isErrorDisplayed();
+        click(By.linkText("Register"));
     }
 
     public void clickOnLoginLink() {
-        click(By.cssSelector("[href='/login']"));
-    }
-
-    public boolean isTextValidationErrorsPresent() {
-        return isElementPresent(By.cssSelector("div.validation-summary-errors"));
-    }
-
-    public boolean isLoginLinkPresent() {
-        return isElementPresent(By.cssSelector("[href='/login']"));
+        click(By.linkText("Log in"));
     }
 
     public void clickOnSignOutButton() {
-        click(By.cssSelector("[href='/logout']"));
+        click(By.linkText("Log out"));
+    }
+
+    public void fillRegistrationForm(User user) {
+        type(By.id("FirstName"), user.getFirstName());
+        type(By.id("LastName"), user.getLastName());
+        type(By.id("Email"), user.getEmail());
+        type(By.id("Password"), user.getPassword());
+        type(By.id("ConfirmPassword"), user.getConfirmPassword());
+    }
+
+    public void fillLoginForm(User user) {
+        type(By.id("Email"), user.getEmail());
+        type(By.id("Password"), user.getPassword());
+    }
+
+    public void clickOnRegistrationButton() {
+        click(By.id("register-button"));
+    }
+
+    public void clickOnLoginButton() {
+        click(By.cssSelector("input.button-1.login-button"));
+    }
+
+    public void register(User user) {
+        clickOnRegistrationLink();
+        fillRegistrationForm(user);
+        clickOnRegistrationButton();
+    }
+
+    public void login(User user) {
+        clickOnLoginLink();
+        fillLoginForm(user);
+        clickOnLoginButton();
+    }
+
+    public boolean isLinkLogOutPresent() {
+        return isElementPresent(By.linkText("Log out"));
+    }
+
+    public boolean isTextValidationErrorsPresent() {
+        return isElementPresent(By.cssSelector(".field-validation-error"));
+    }
+
+    public boolean isEmailAlreadyExistErrorDisplayed() {
+        return isElementPresent(By.xpath("//li[contains(.,'The specified email already exists')]"));
     }
 }
